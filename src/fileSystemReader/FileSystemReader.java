@@ -22,9 +22,11 @@ public class FileSystemReader {
 		String userInput = userInputScan.nextLine();
 		
 		Path currentPath = Paths.get(userInput);
-		//currentPath = currentPath.getRoot();
+		System.out.println();
 		System.out.println("******Structure of " + userInput + " ******");
 		listDirectory(currentPath, 0);
+		System.out.println();
+		System.out.println("------Stats------");
 		System.out.println("Folder Count: " + totalDirectories);
 		System.out.println("File Count: " + totalFiles);
 		System.out.println("Total File Size: " + totalFileSize + "kb");
