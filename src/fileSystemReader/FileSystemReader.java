@@ -1,6 +1,7 @@
 package fileSystemReader;
 
 import java.util.Scanner;
+import java.io.File;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ public class FileSystemReader {
 
 	private static int totalDirectories;
 	private static int totalFiles;
+	private static int totalFileSize;
 
 	public static void main(String[] args) throws Exception {
 		int totals = 0;
@@ -23,7 +25,9 @@ public class FileSystemReader {
 		//currentPath = currentPath.getRoot();
 		System.out.println("******Structure of " + userInput + " ******");
 		listDirectory(currentPath, 0);
-		System.out.println(totalDirectories + "  " + totalFiles);
+		System.out.println("Folder Count: " + totalDirectories);
+		System.out.println("File Count: " + totalFiles);
+		System.out.println("Total File Size: " + totalFileSize + "kb");
 	}
 	
 	public static void listDirectory(Path path,int level) throws Exception{
@@ -43,7 +47,10 @@ public class FileSystemReader {
 			}
 		} else {
 			FileSystemReader.totalFiles++;
-			System.out.println(formatTree(level) + "--" + path.getFileName());
+			File file = path.toFile();
+			long fileSizeInKB = file.length() / 1024;
+			System.out.println(formatTree(level) + "--" + path.getFileName() + " | " + fileSizeInKB + "kb");
+			FileSystemReader.totalFileSize += fileSizeInKB;
 		}
 	}
 	
