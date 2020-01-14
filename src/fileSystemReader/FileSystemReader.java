@@ -24,7 +24,10 @@ public class FileSystemReader {
 		Path currentPath = Paths.get(userInput);
 		System.out.println();
 		System.out.println("******Structure of " + userInput + " ******");
+		
+		//call logic
 		listDirectory(currentPath, 0);
+		
 		System.out.println();
 		System.out.println("------Stats------");
 		System.out.println("Folder Count: " + totalDirectories);
@@ -42,21 +45,28 @@ public class FileSystemReader {
 			String[] args;
 			//increment total
 			FileSystemReader.totalDirectories++;
+			
 			DirectoryStream<Path> paths = Files.newDirectoryStream(path);
 			System.out.println(formatTree(level) + "++" + path.getFileName());
 			for(Path thisPath: paths) {
 				listDirectory(thisPath, level + 1);
 			}
 		} else {
+			//increment file count
 			FileSystemReader.totalFiles++;
+			
+			//create file to get size
 			File file = path.toFile();
+			//convert to kb
 			long fileSizeInKB = file.length() / 1024;
 			System.out.println(formatTree(level) + "--" + path.getFileName() + " | " + fileSizeInKB + "kb");
+			//increment total file size
 			FileSystemReader.totalFileSize += fileSizeInKB;
 		}
 	}
 	
 	public static String formatTree(int level) {
+		//format levels with spaces
 		StringBuilder builder = new StringBuilder();
 		for(int i = 0; i < level; i++) {
 			builder.append("     ");
